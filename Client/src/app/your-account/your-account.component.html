@@ -1,0 +1,67 @@
+<ng-container *ngIf="userFetched">
+  <div class="container w-25">
+    <form #udpateUserForm="ngForm" (ngSubmit)="update(userId, udpateUserForm)" autocomplete="off">
+
+      <div class="form-group">
+        <h2 class="text-center text-primary">Update your account</h2>
+      </div>
+
+      <hr>
+
+      <div class="form-group">
+        <label class="form-label">Previous name: {{user.firstName}} {{user.lastName}}</label>
+      </div>
+
+      <hr>
+      <br>
+
+      <div class="form-group">
+
+        <input
+          name="firstName"
+          [(ngModel)]="model.firstName"
+          class="form-control"
+          type="text"
+          placeholder="Firstname"
+          required
+        >
+
+        <br>
+
+        <input
+          name="lastName"
+          [(ngModel)]="model.lastName"
+          class="form-control"
+          type="text"
+          placeholder="Lastname"
+          required
+        >
+
+        <br>
+
+        <input
+          name="password"
+          [(ngModel)]="model.password"
+          class="form-control"
+          type="password"
+          placeholder="Password"
+          required
+        >
+
+        <br>
+
+        <div class="form-group text-center">
+          <button
+            class="btn btn-success"
+            type="submit"
+          >
+            Update
+          </button>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+</ng-container>

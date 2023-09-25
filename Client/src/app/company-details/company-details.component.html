@@ -1,0 +1,40 @@
+<ng-container *ngIf="fetched">
+  <div class="container w-75">
+
+    <h1 class="text-center text-primary">Company</h1>
+    <br>
+
+    <div class="row g-0 d-flex justify-content-center">
+      <ul class="list-group list-group-flush col-auto">
+        <li class="list-group-item fw-bold border-end">Name:</li>
+        <li class="list-group-item fw-bold border-end">Employees:</li>
+      </ul>
+      <ul class="list-group list-group-flush col-auto">
+        <li class="list-group-item">{{company.name}}</li>
+        <ul class="list-group list-group-flush">
+          <ng-container *ngFor="let c of clients">
+            <li class="list-group-item border-start">{{c.firstName}} {{c.lastName}}</li>
+          </ng-container>
+        </ul>
+      </ul>
+    </div>
+
+    <br>
+
+    <div class="row justify-content-center">
+
+      <div class="text-center col-auto">
+        <a
+          [routerLink]="['/company-update/', companyId]"
+          class="btn btn-primary btn-lg"
+          role="button"
+          aria-pressed="true"
+        >
+          Update
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</ng-container>

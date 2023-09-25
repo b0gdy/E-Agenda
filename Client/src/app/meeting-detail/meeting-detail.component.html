@@ -1,0 +1,102 @@
+<ng-container *ngIf="meetingFetched">
+  <div class="container w-75">
+
+    <h1 class="text-center text-primary">Meeting</h1>
+    <br>
+
+    <div class="row g-0 d-flex justify-content-center">
+      <ul class="list-group list-group-flush col-auto">
+        <li class="list-group-item fw-bold border-end">Date:</li>
+        <li class="list-group-item fw-bold border-end">Start Time:</li>
+        <li class="list-group-item fw-bold border-end">End Time:</li>
+        <li class="list-group-item fw-bold border-end">Created at:</li>
+        <li class="list-group-item fw-bold border-end">Updated at:</li>
+        <li class="list-group-item fw-bold border-end">Participants:</li>
+      </ul>
+      <ul class="list-group list-group-flush col-auto">
+        <li class="list-group-item">{{meeting.date | date:'EEEE, dd MMMM, yyyy'}}</li>
+        <li class="list-group-item">{{meeting.start | date:'HH:mm'}}</li>
+        <li class="list-group-item">{{meeting.end | date:'HH:mm'}}</li>
+        <li class="list-group-item">{{meeting.createdAt | date:'EEEE, dd MMMM, yyyy'}}</li>
+        <li class="list-group-item">{{meeting.updatedAt | date:'EEEE, dd MMMM, yyyy'}}</li>
+  <!--      <li-->
+  <!--        *ngFor="let p of meeting.participants; index as i"-->
+  <!--        class="list-group-item p-0 m-0"-->
+  <!--      >-->
+  <!--        <div *ngIf="p.response.toString() === YES" class="row g-0 d-flex justify-content-center">-->
+  <!--          <ul class="list-group list-group-flush col-auto  border-start border-top">-->
+  <!--            <li class="list-group-item fw-bold border-end">employee:</li>-->
+  <!--            <li class="list-group-item fw-bold border-end">response:</li>-->
+  <!--          </ul>-->
+  <!--          <ul class="list-group list-group-flush col-auto border-start border-top">-->
+  <!--            <li class="list-group-item">{{p.employee.firstName}} {{p.employee.firstName}}</li>-->
+  <!--            <li class="list-group-item">{{p.response}}</li>-->
+  <!--          </ul>-->
+  <!--        </div>-->
+  <!--        <div *ngIf="p.response.toString() === NO" class="row g-0 d-flex justify-content-center">-->
+  <!--          <ul class="list-group list-group-flush col-auto list-group-item-danger">-->
+  <!--            <li class="list-group-item fw-bold border-end">employee:</li>-->
+  <!--            <li class="list-group-item fw-bold border-end">response:</li>-->
+  <!--          </ul>-->
+  <!--          <ul class="list-group list-group-flush col-auto list-group-item-danger">-->
+  <!--            <li class="list-group-item">{{p.employee.firstName}} {{p.employee.firstName}}</li>-->
+  <!--            <li class="list-group-item">{{p.response}}</li>-->
+  <!--          </ul>-->
+  <!--        </div>-->
+  <!--      </li>-->
+          <table class="table table-borderless table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th class="border-start" scope="col">Employee</th>
+                <th class="border-start" scope="col">Response</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let p of meeting.participants; index as i" [routerLink]="['/employee-details/', p.employee.id]" class="border-top">
+              <ng-container *ngIf="p.response.toString() === YES">
+                <th class="table-success" scope="row">{{i+1}}</th>
+                <td class="border-start table-success">{{p.employee.firstName}} {{p.employee.firstName}}</td>
+                <td class="border-start table-success">{{p.response}}</td>
+              </ng-container>
+              <ng-container *ngIf="p.response.toString() === NO">
+                <th class="table-danger" scope="row">{{i+1}}</th>
+                <td class="border-start table-danger">{{p.employee.firstName}} {{p.employee.firstName}}</td>
+                <td class="border-start table-danger">{{p.response}}</td>
+              </ng-container>
+            </tr>
+            </tbody>
+          </table>
+      </ul>
+    </div>
+
+    <br>
+
+    <div class="row justify-content-center">
+
+  <!--    <div class="text-center col-auto">-->
+  <!--      <a-->
+  <!--        [routerLink]="['/meeting-update/', meetingId]"-->
+  <!--        class="btn btn-primary btn-lg"-->
+  <!--        role="button"-->
+  <!--        aria-pressed="true"-->
+  <!--      >-->
+  <!--        Update-->
+  <!--      </a>-->
+  <!--    </div>-->
+
+      <div class="text-center col-auto">
+        <a
+          (click)="delete(meetingId)"
+          class="btn btn-danger btn-lg"
+          role="button"
+          aria-pressed="true"
+        >
+          Delete
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</ng-container>

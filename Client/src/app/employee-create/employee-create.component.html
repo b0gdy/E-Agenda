@@ -1,0 +1,109 @@
+<div class="container w-25">
+  <form #createEmployeeForm="ngForm" (ngSubmit)="create(createEmployeeForm)" autocomplete="off">
+
+    <div class="form-group">
+      <h2 class="text-center text-primary">Add new employee</h2>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+
+      <input
+        name="userName"
+        [(ngModel)]="model.userName"
+        class="form-control"
+        type="text"
+        placeholder="Username"
+        required
+      >
+
+      <br>
+
+      <input
+        name="password"
+        [(ngModel)]="model.password"
+        class="form-control"
+        type="password"
+        placeholder="Password"
+        required
+      >
+
+      <br>
+
+      <div class="form-group text-center">
+        <label class="form-label d-inline" style="margin-right:10px" for="role">Role: </label>
+        <select
+          class="form-select d-inline"
+          style="width: auto"
+          name="role"
+          [(ngModel)]="model.role"
+          id="role"
+          required
+        >
+          <option *ngFor="let roleName of roleNames" [value]="roleName">{{roleName}}</option>
+        </select>
+      </div>
+
+      <br>
+
+
+      <input
+        name="firstName"
+        [(ngModel)]="model.firstName"
+        class="form-control"
+        type="text"
+        placeholder="Firstname"
+        required
+      >
+
+      <br>
+
+      <input
+        name="lastName"
+        [(ngModel)]="model.lastName"
+        class="form-control"
+        type="text"
+        placeholder="Lastname"
+        required
+      >
+
+      <br>
+
+      <input
+        name="position"
+        [(ngModel)]="model.position"
+        class="form-control"
+        type="text"
+        placeholder="Position"
+        required
+      >
+
+      <br>
+
+      <input
+        name="salary"
+        [(ngModel)]="model.salary"
+        class="form-control"
+        type="number"
+        placeholder="Salary"
+        required
+      >
+
+      <br>
+
+      <div class="form-group text-center">
+        <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="!createEmployeeForm.valid"
+        >
+          Create
+        </button>
+      </div>
+
+    </div>
+
+
+  </form>
+</div>

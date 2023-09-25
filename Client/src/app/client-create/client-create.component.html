@@ -1,0 +1,87 @@
+<div class="container w-25">
+  <form #createClientForm="ngForm" (ngSubmit)="create(createClientForm)" autocomplete="off">
+
+    <div class="form-group">
+      <h2 class="text-center text-primary">Add new client</h2>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+
+      <input
+        name="userName"
+        [(ngModel)]="model.userName"
+        class="form-control"
+        type="text"
+        placeholder="Username"
+        required
+      >
+
+      <br>
+
+      <input
+        name="password"
+        [(ngModel)]="model.password"
+        class="form-control"
+        type="password"
+        placeholder="Password"
+        required
+      >
+
+      <br>
+
+      <div class="form-group text-center">
+        <label class="form-label d-inline" style="margin-right:10px" for="company">Company: </label>
+        <select
+          class="form-select d-inline"
+          style="width: auto"
+          name="company"
+          [(ngModel)]="model.companyId"
+          id="company"
+          required
+        >
+          <option *ngFor="let c of companies" [value]="c.id">{{c.name}}</option>
+        </select>
+      </div>
+
+      <br>
+
+
+      <input
+        name="firstName"
+        [(ngModel)]="model.firstName"
+        class="form-control"
+        type="text"
+        placeholder="Firstname"
+        required
+      >
+
+      <br>
+
+      <input
+        name="lastName"
+        [(ngModel)]="model.lastName"
+        class="form-control"
+        type="text"
+        placeholder="Lastname"
+        required
+      >
+
+      <br>
+
+      <div class="form-group text-center">
+        <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="!createClientForm.valid"
+        >
+          Create
+        </button>
+      </div>
+
+    </div>
+
+
+  </form>
+</div>

@@ -1,0 +1,40 @@
+<ng-container *ngIf="fetched">
+  <div class="container w-25">
+
+    <h1 class="text-center text-primary">Companies</h1>
+    <br>
+
+    <table class="table table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th class="w-auto" scope="col">#</th>
+        <th class="w-auto" scope="col">Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let c of companies | paginate: { itemsPerPage: size, currentPage: page, totalItems: total}; index as i" [routerLink]="['/company-details/', c.id]">
+        <th scope="row">{{i+1}}</th>
+        <td>{{c.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <pagination-controls class="text-center" previousLabel="Prev" nextLabel="Next" [responsive]="true" [autoHide]="true" (pageChange)="page = $event"></pagination-controls>
+
+    <br>
+
+    <div class="text-center">
+      <a
+        routerLink='/company-create'
+        class="btn btn-primary btn-lg"
+        role="button"
+        aria-pressed="true"
+      >
+        Add company
+      </a>
+    </div>
+
+  </div>
+</ng-container>

@@ -1,0 +1,92 @@
+<div class="container w-25">
+  <form #createTicketForm="ngForm" (ngSubmit)="create(createTicketForm)" autocomplete="off">
+
+    <div class="form-group">
+      <h2 class="text-center text-primary">Add new ticket</h2>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+
+      <input
+        name="title"
+        [(ngModel)]="model.title"
+        class="form-control"
+        type="text"
+        placeholder="Title"
+        required
+      >
+
+      <br>
+
+      <label class="form-label d-inline" style="margin-right:10px" for="role">Priority: </label>
+      <select
+        class="form-select d-inline"
+        style="width: auto"
+        name="role"
+        [(ngModel)]="model.priority"
+        id="role"
+        required
+      >
+        <option [value]="Low">Low</option>
+        <option [value]="High">High</option>
+      </select>
+
+      <br>
+      <br>
+
+
+      <div class="form-group row">
+        <label class="form-control-label col-auto mt-auto mb-auto">Add Detail:</label>
+        <form class="col row">
+          <input
+            name="detail"
+            [(ngModel)]="model_aux.detail"
+            class="form-control col rounded-end-0"
+            type="text"
+            placeholder="Detail"
+            required
+          >
+          <button class="btn btn-outline-primary col-auto rounded-start-0" type="button" (click)="addDetail(model_aux.detail)">Add</button>
+        </form>
+      </div>
+
+      <br>
+
+
+      <ng-container *ngIf="detailsAdded">
+
+        <div class="row">
+
+          <h4>Added Details:</h4>
+
+          <ul class="list-group">
+            <ng-container *ngFor="let d of details">
+              <li class="list-group-item list-group-item-action" (click)="removeDetail(d)">
+                {{d}}
+              </li>
+            </ng-container>
+          </ul>
+
+        </div>
+
+        <br>
+
+      </ng-container>
+
+      <div class="form-group text-center">
+        <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="!createTicketForm.valid"
+        >
+          Create
+        </button>
+      </div>
+
+    </div>
+
+
+  </form>
+</div>

@@ -1,0 +1,71 @@
+<ng-container *ngIf="fetched">
+  <div class="container w-100">
+
+    <h1 class="text-center text-primary">Busy Times</h1>
+
+    <hr>
+
+    <h4 class="text-center">Info note:</h4>
+    <p class="text-center mb-0">These represent time intervals during which you want to work undisturbed.</p>
+    <p class="text-center mb-0">During these times, no meetings will be scheduled!</p>
+    <p class="text-center">In this table there are shown your future and the most recent intervals that you have scheduled.</p>
+
+    <hr>
+
+    <br>
+
+    <table class="table table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th class="w-auto" scope="col">#</th>
+        <th class="w-auto" scope="col">Date</th>
+        <th class="w-auto" scope="col">Start</th>
+        <th class="w-auto" scope="col" colspan="2">End</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let bt of busyTimes | paginate: { itemsPerPage: size, currentPage: page, totalItems: total}; index as i" [routerLink]="['/busy-time-details-employee/', bt.id]">
+        <ng-container *ngIf="bt.date.getTime() === date.getTime()">
+          <th class="table-info" scope="row">{{(i+1)*page}}</th>
+          <td class="table-info">{{bt.date | date:'dd-MM-yyyy'}}</td>
+          <td class="table-info">{{bt.start | date:'HH:mm'}}</td>
+          <td class="table-info">{{bt.end | date:'HH:mm'}}</td>
+          <td class="table-info">Today</td>
+        </ng-container>
+        <ng-container *ngIf="bt.date.getTime() < date.getTime()">
+          <th class="table-secondary" scope="row">{{i+1+(page-1)*size}}</th>
+          <td class="table-secondary">{{bt.date | date:'dd-MM-yyyy'}}</td>
+          <td class="table-secondary">{{bt.start | date:'HH:mm'}}</td>
+          <td class="table-secondary">{{bt.end | date:'HH:mm'}}</td>
+          <td class="table-secondary">Past</td>
+        </ng-container>
+        <ng-container *ngIf="bt.date.getTime() > date.getTime()">
+          <th class="table-light" scope="row">{{i+1+(page-1)*size}}</th>
+          <td class="table-light">{{bt.date | date:'dd-MM-yyyy'}}</td>
+          <td class="table-light">{{bt.start | date:'HH:mm'}}</td>
+          <td class="table-light">{{bt.end | date:'HH:mm'}}</td>
+          <td class="table-light">Future</td>
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <pagination-controls class="text-center" previousLabel="Prev" nextLabel="Next" [responsive]="true" [autoHide]="true" (pageChange)="page = $event"></pagination-controls>
+
+    <br>
+
+    <div class="text-center">
+      <a
+        routerLink='/busy-time-create-employee'
+        class="btn btn-primary btn-lg"
+        role="button"
+        aria-pressed="true"
+      >
+        Add new
+      </a>
+    </div>
+
+  </div>
+</ng-container>

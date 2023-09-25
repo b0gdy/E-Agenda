@@ -1,0 +1,96 @@
+<div class="container w-25">
+  <form #udpateEmployeeForm="ngForm" (ngSubmit)="update(employeeId, udpateEmployeeForm)" autocomplete="off">
+
+    <div class="form-group">
+      <h2 class="text-center text-primary">Update employee</h2>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <label class="form-label">Previous name: {{employee.firstName}} {{employee.lastName}}</label>
+      <label class="form-label">Previous role: {{employee.role}}</label>
+      <label class="form-label">Previous position: {{employee.position}}</label>
+      <label class="form-label">Previous salary: {{employee.salary}}</label>
+      <br>
+    </div>
+
+    <hr>
+    <br>
+
+    <div class="form-group">
+
+      <input
+        name="firstName"
+        [(ngModel)]="model.firstName"
+        class="form-control"
+        type="text"
+        placeholder="Firstname"
+        required
+      >
+
+      <br>
+
+      <input
+        name="lastName"
+        [(ngModel)]="model.lastName"
+        class="form-control"
+        type="text"
+        placeholder="Lastname"
+        required
+      >
+
+      <br>
+
+      <input
+        name="position"
+        [(ngModel)]="model.position"
+        class="form-control"
+        type="text"
+        placeholder="Position"
+        required
+      >
+
+      <br>
+
+      <input
+        name="salary"
+        [(ngModel)]="model.salary"
+        class="form-control"
+        type="number"
+        placeholder="Salary"
+        required
+      >
+
+      <br>
+
+      <div class="form-group text-center">
+        <label class="form-label d-inline" style="margin-right:10px" for="role">Role: </label>
+        <select
+          class="form-select d-inline"
+          style="width: auto"
+          name="role"
+          [(ngModel)]="model.role"
+          id="role"
+          required
+        >
+          <option *ngFor="let roleName of roleNames" [value]="roleName">{{roleName}}</option>
+        </select>
+      </div>
+
+      <br>
+
+      <div class="form-group text-center">
+        <button
+          class="btn btn-success"
+          type="submit"
+        >
+          Update
+        </button>
+      </div>
+
+    </div>
+
+
+  </form>
+</div>

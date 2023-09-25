@@ -1,0 +1,106 @@
+<div class="container">
+
+  <h1 class="text-center text-primary">Tickets</h1>
+  <br>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="form-group row col-auto">
+      <label class="form-label col-auto mt-auto mb-auto">Show disabled:</label>
+      <form class="form-check form-switch col-auto mt-auto mb-auto">
+        <input class="form-check-input" type="checkbox" id="showDisabled" (click)="showDisabled()">
+        <label class="form-check-label" for="showDisabled">
+          Yes
+        </label>
+      </form>
+    </div>
+    <div class="col-auto"></div>
+    <div class="form-group row col-auto">
+      <label class="form-label col-auto mt-auto mb-auto">Show unassigned:</label>
+      <form class="form-check form-switch col-auto mt-auto mb-auto">
+        <input class="form-check-input" type="checkbox" id="showUnassigned" (click)="showUnassigned()">
+        <label class="form-check-label" for="showUnassigned">
+          Yes
+        </label>
+      </form>
+    </div>
+    <div class="col"></div>
+  </div>
+  <br>
+
+  <table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+      <th class="w-auto" scope="col">#</th>
+      <th class="w-auto" scope="col">Title</th>
+      <th class="w-auto" scope="col">Created At</th>
+      <th class="w-auto" scope="col">Company</th>
+      <th class="w-auto" scope="col">Employee</th>
+      <th class="w-auto" scope="col">Priority</th>
+      <th class="w-auto" scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let t of tickets | paginate: { itemsPerPage: size, currentPage: page, totalItems: total}; index as i" [routerLink]="['/ticket-details-employee/', t.id]">
+      <ng-container *ngIf="(t.enabled) && (t.status.toString() === Complete)">
+        <th class="table-success" scope="row">{{(i+1)*page}}</th>
+        <td class="table-success">{{t.title}}</td>
+        <td class="table-success">{{t.createdAt | date:'dd-MM-yyyy HH:mm'}}</td>
+        <td class="table-success">{{t.client.company.name}}</td>
+        <td class="table-success">
+          <ng-container *ngIf="(t.employee)">
+            {{t.employee.firstName}} {{t.employee.lastName}}
+          </ng-container>
+        </td>
+        <td class="table-success">{{t.priority}}</td>
+        <td class="table-success">{{t.status}}</td>
+      </ng-container>
+      <ng-container *ngIf="(t.enabled) && ((t.status.toString() === Working) && (t.priority.toString() === High))">
+        <th class="table-danger" scope="row">{{i+1+(page-1)*size}}</th>
+        <td class="table-danger">{{t.title}}</td>
+        <td class="table-danger">{{t.createdAt | date:'dd-MM-yyyy HH:mm'}}</td>
+        <td class="table-danger">{{t.client.company.name}}</td>
+        <td class="table-danger">
+          <ng-container *ngIf="(t.employee)">
+            {{t.employee.firstName}} {{t.employee.lastName}}
+          </ng-container>
+        </td>
+        <td class="table-danger">{{t.priority}}</td>
+        <td class="table-danger">{{t.status}}</td>
+      </ng-container>
+      <ng-container *ngIf="(t.enabled) && ((t.status.toString() === Working) && (t.priority.toString() === Low))">
+        <th class="table-warning" scope="row">{{i+1+(page-1)*size}}</th>
+        <td class="table-warning">{{t.title}}</td>
+        <td class="table-warning">{{t.createdAt | date:'dd-MM-yyyy HH:mm'}}</td>
+        <td class="table-warning">{{t.client.company.name}}</td>
+        <td class="table-warning">
+          <ng-container *ngIf="(t.employee)">
+            {{t.employee.firstName}} {{t.employee.lastName}}
+          </ng-container>
+        </td>
+        <td class="table-warning">{{t.priority}}</td>
+        <td class="table-warning">{{t.status}}</td>
+      </ng-container>
+<!--      <ng-container *ngIf="(disableShown === true) && (t.enabled === false)" class="text-decoration-line-through">-->
+      <ng-container *ngIf="t.enabled === false" class="text-decoration-line-through">
+        <th class="table-secondary text-muted" scope="row">{{i+1+(page-1)*size}}</th>
+        <td class="table-secondary text-muted">{{t.title}}</td>
+        <td class="table-secondary text-muted">{{t.createdAt | date:'dd-MM-yyyy HH:mm'}}</td>
+        <td class="table-secondary text-muted">{{t.client.company.name}}</td>
+        <td class="table-secondary text-muted">
+          <ng-container *ngIf="(t.employee)">
+            {{t.employee.firstName}} {{t.employee.lastName}}
+          </ng-container>
+        </td>
+        <td class="table-secondary text-muted">{{t.priority}}</td>
+        <td class="table-secondary text-muted">Disabled</td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <pagination-controls class="text-center" previousLabel="Prev" nextLabel="Next" [responsive]="true" [autoHide]="true" (pageChange)="page = $event"></pagination-controls>
+
+</div>

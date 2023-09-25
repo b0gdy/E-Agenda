@@ -1,0 +1,116 @@
+<ng-container *ngIf="ticketFetched && employeesFetched">
+  <div class="container w-75">
+
+    <h1 class="text-center text-primary">Ticket</h1>
+    <br>
+
+    <div class="row g-0 d-flex justify-content-center">
+      <ul class="list-group list-group-flush col-auto">
+        <li class="list-group-item fw-bold border-end">Title:</li>
+        <li class="list-group-item fw-bold border-end">Enabled:</li>
+        <li class="list-group-item fw-bold border-end">Status:</li>
+        <li class="list-group-item fw-bold border-end">Priority:</li>
+        <li class="list-group-item fw-bold border-end">Client:</li>
+        <li class="list-group-item fw-bold border-end">Company:</li>
+        <li class="list-group-item fw-bold border-end">Employee:</li>
+        <li class="list-group-item fw-bold border-end">Created At:</li>
+        <li class="list-group-item fw-bold border-end">Updated At:</li>
+        <li class="list-group-item fw-bold border-end">Description:</li>
+      </ul>
+      <ul class="list-group list-group-flush col-auto" style="max-width: 75%">
+        <li class="list-group-item">{{ticket.title}}</li>
+        <li class="list-group-item">{{ticket.enabled}}</li>
+        <li class="list-group-item">{{ticket.status}}</li>
+        <li class="list-group-item">{{ticket.priority}}</li>
+        <li class="list-group-item">
+          <ng-container *ngIf="ticket.client !== null">
+            {{ticket.client.firstName}} {{ticket.client.lastName}}
+          </ng-container>
+        </li>
+        <li class="list-group-item">{{ticket.client.company.name}}</li>
+        <li class="list-group-item">
+          <ng-container *ngIf="ticket.employee !== null">
+            {{ticket.employee.firstName}} {{ticket.employee.lastName}}
+          </ng-container>
+          <ng-container *ngIf="ticket.employee === null">
+            No user assigned!
+          </ng-container>
+        </li>
+        <li class="list-group-item">{{ticket.createdAt | date:'EEEE, dd MMMM, yyyy'}}</li>
+        <li class="list-group-item">{{ticket.updatedAt | date:'EEEE, dd MMMM, yyyy'}}</li>
+        <ul class="list-group list-group-flush">
+          <ng-container *ngIf="ticket.description !== null">
+            <ng-container *ngFor="let d of ticket.description.details">
+              <li class="list-group-item border-start">{{d}}</li>
+            </ng-container>
+          </ng-container>
+        </ul>
+      </ul>
+    </div>
+
+    <br>
+
+    <ng-container *ngIf="ticket.enabled">
+      <div class="row justify-content-center">
+
+        <ng-container *ngIf="ticket.employee === null">
+
+          <div class="form-group text-center">
+            <label class="form-label d-inline" style="margin-right:10px" for="company">Employee: </label>
+            <select
+              class="form-select d-inline"
+              style="width: auto"
+              name="company"
+              [(ngModel)]="employee.id"
+              id="company"
+              required
+            >
+              <option *ngFor="let e of employees" [value]="e.id">{{e.firstName}} {{e.lastName}}</option>
+            </select>
+          </div>
+
+          <br>
+          <br>
+          <br>
+
+
+          <div class="text-center col-auto">
+            <button
+              class="btn btn-primary btn-lg"
+              (click)="updateEmployee(employee.id)"
+            >
+              Assign to employee
+            </button>
+          </div>
+        </ng-container>
+
+        <div class="text-center col-auto">
+          <button
+            class="btn btn-danger btn-lg"
+            (click)="updateEnabled(false)"
+          >
+            Disable
+          </button>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!ticket.enabled">
+      <div class="row justify-content-center">
+
+        <div class="text-center col-auto">
+          <button
+            class="btn btn-success btn-lg"
+            (click)="updateEnabled(true)"
+          >
+            Enable
+          </button>
+        </div>
+
+      </div>
+    </ng-container>
+
+  </div>
+  <br>
+</ng-container>

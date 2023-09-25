@@ -1,0 +1,98 @@
+<ng-container *ngIf="employeeFetched">
+  <div class="container">
+    <form #createBusyTimeForm="ngForm" (ngSubmit)="create(createBusyTimeForm)" autocomplete="off">
+
+      <div class="form-group">
+        <h2 class="text-center text-primary">Add new</h2>
+      </div>
+
+      <hr>
+
+      <div class="form-group row">
+
+        <div class="col-2"></div>
+
+        <div class="col">
+
+          <div class="form-group row">
+            <label class="form-control-label col-auto mt-auto mb-auto">Select start date:</label>
+            <form class="col row">
+              <input
+                type="datetime-local"
+                class="form-control col rounded-end-0"
+                name="startDate"
+                min="{{minStartDate|date: 'yyyy-MM-ddTHH:mm'}}"
+                [(ngModel)]="model.startDate"
+                placeholder="BusyTime start date"
+                required
+              >
+              <button class="btn btn-outline-primary col-auto rounded-start-0" type="button" (click)="selectStartDate(model.startDate)">Select</button>
+            </form>
+          </div>
+
+          <ng-container *ngIf="startDateSelected">
+
+            <br>
+
+            <div class="form-group row">
+              <label class="form-control-label col-auto mt-auto mb-auto">Select end date:</label>
+              <form class="col row">
+                <input
+                  type="datetime-local"
+                  class="form-control col rounded-end-0"
+                  name="endDate"
+                  min="{{minEndDate|date: 'yyyy-MM-ddTHH:mm'}}"
+                  [(ngModel)]="model.endDate"
+                  placeholder="BusyTime end date"
+                  required
+                >
+                <button class="btn btn-outline-primary col-auto rounded-start-0" type="button" (click)="selectEndDate(model.endDate)">Select</button>
+              </form>
+            </div>
+
+          </ng-container>
+
+          <ng-container *ngIf="startDateSelected && endDateSelected">
+
+            <br>
+
+            <div class="form-group row">
+              <label class="form-control-label col-auto mt-auto mb-auto">Add description:</label>
+              <form class="col row">
+                <input
+                  name="description"
+                  [(ngModel)]="model.description"
+                  class="form-control"
+                  type="text"
+                  placeholder="Description"
+                  required
+                >
+              </form>
+            </div>
+
+            <br>
+
+            <div class="form-group text-center">
+              <button
+                class="btn btn-success btn-lg"
+                type="submit"
+                [disabled]="!createBusyTimeForm.valid"
+              >
+                Create
+              </button>
+            </div>
+
+            <br>
+
+          </ng-container>
+
+        </div>
+
+        <div class="col-2"></div>
+
+      </div>
+
+
+    </form>
+  </div>
+</ng-container>

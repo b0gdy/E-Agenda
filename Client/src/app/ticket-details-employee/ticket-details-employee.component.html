@@ -1,0 +1,128 @@
+<ng-container *ngIf="ticketFetched === true">
+  <div class="container w-75">
+
+    <h1 class="text-center text-primary">Ticket</h1>
+    <br>
+
+    <div class="row g-0 d-flex justify-content-center">
+      <ul class="list-group list-group-flush col-auto">
+        <li class="list-group-item fw-bold border-end">Title:</li>
+        <li class="list-group-item fw-bold border-end">Enabled:</li>
+        <li class="list-group-item fw-bold border-end">Status:</li>
+        <li class="list-group-item fw-bold border-end">Priority:</li>
+        <li class="list-group-item fw-bold border-end">Client:</li>
+        <li class="list-group-item fw-bold border-end">Company:</li>
+        <li class="list-group-item fw-bold border-end">Employee:</li>
+        <li class="list-group-item fw-bold border-end">Created At:</li>
+        <li class="list-group-item fw-bold border-end">Updated At:</li>
+        <li class="list-group-item fw-bold border-end">Description:</li>
+      </ul>
+      <ul class="list-group list-group-flush col-auto" style="max-width: 75%">
+        <li class="list-group-item">{{ticket.title}}</li>
+        <li class="list-group-item">{{ticket.enabled}}</li>
+        <li class="list-group-item">{{ticket.status}}</li>
+        <li class="list-group-item">{{ticket.priority}}</li>
+        <li class="list-group-item">
+          <ng-container *ngIf="ticket.client !== null">
+            {{ticket.client.firstName}} {{ticket.client.lastName}}
+          </ng-container>
+        </li>
+        <li class="list-group-item">{{ticket.client.company.name}}</li>
+        <li class="list-group-item">
+          <ng-container *ngIf="ticket.employee !== null">
+            {{ticket.employee.firstName}} {{ticket.employee.lastName}}
+          </ng-container>
+          <ng-container *ngIf="ticket.employee === null">
+            No user assigned!
+          </ng-container>
+        </li>
+        <li class="list-group-item">{{ticket.createdAt | date:'EEEE, dd MMMM, yyyy'}}</li>
+        <li class="list-group-item">{{ticket.updatedAt | date:'EEEE, dd MMMM, yyyy'}}</li>
+        <ul class="list-group list-group-flush">
+          <ng-container *ngIf="ticket.description !== null">
+            <ng-container *ngFor="let d of ticket.description.details">
+              <li class="list-group-item border-start">{{d}}</li>
+            </ng-container>
+          </ng-container>
+        </ul>
+  <!--      <table class="table table-borderless table-hover">-->
+  <!--        <thead>-->
+  <!--        <tr>-->
+  <!--          <th scope="col">#</th>-->
+  <!--          <th class="border-start" scope="col">Employee</th>-->
+  <!--          <th class="border-start" scope="col">Response</th>-->
+  <!--        </tr>-->
+  <!--        </thead>-->
+  <!--        <tbody>-->
+  <!--        <tr *ngFor="let p of meeting.participants; index as i" [routerLink]="['/employee-details/', p.employee.id]" class="border-top">-->
+  <!--          <ng-container *ngIf="p.response.toString() === YES">-->
+  <!--            <th class="table-success" scope="row">{{i+1}}</th>-->
+  <!--            <td class="border-start table-success">{{p.employee.firstName}} {{p.employee.firstName}}</td>-->
+  <!--            <td class="border-start table-success">{{p.response}}</td>-->
+  <!--          </ng-container>-->
+  <!--          <ng-container *ngIf="p.response.toString() === NO">-->
+  <!--            <th class="table-danger" scope="row">{{i+1}}</th>-->
+  <!--            <td class="border-start table-danger">{{p.employee.firstName}} {{p.employee.firstName}}</td>-->
+  <!--            <td class="border-start table-danger">{{p.response}}</td>-->
+  <!--          </ng-container>-->
+  <!--        </tr>-->
+  <!--        </tbody>-->
+  <!--      </table>-->
+      </ul>
+    </div>
+
+    <br>
+
+    <ng-container *ngIf="ticket.enabled === true">
+      <div class="row justify-content-center">
+
+        <ng-container *ngIf="ticket.status.toString() === Working">
+
+          <div class="text-center col-auto">
+            <button
+              class="btn btn-success btn-lg"
+              (click)="updateEmployee(user.id)"
+            >
+              Assign
+            </button>
+          </div>
+
+          <div class="text-center col-auto">
+            <button
+              class="btn btn-danger btn-lg"
+              (click)="updateEmployee(0)"
+            >
+              Unassign
+            </button>
+          </div>
+
+          <div class="text-center col-auto">
+            <button
+              class="btn btn-primary btn-lg"
+              [disabled]="ticket.employee === null"
+              (click)="updateStatus(Complete)"
+            >
+              Mark Complete
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="ticket.status.toString() === Complete">
+          <div class="text-center col-auto">
+            <button
+              class="btn btn-primary btn-lg"
+              [disabled]="ticket.employee === null"
+              (click)="updateStatus(Working)"
+            >
+              Mark Incomplete
+            </button>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+
+    <br>
+
+  </div>
+</ng-container>

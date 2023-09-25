@@ -1,0 +1,46 @@
+<ng-container *ngIf="companyFetched">
+  <div class="container w-25">
+    <form #udpateCompanyForm="ngForm" (ngSubmit)="update(companyId, udpateCompanyForm)" autocomplete="off">
+
+      <div class="form-group">
+        <h2 class="text-center text-primary">Update company</h2>
+      </div>
+
+      <hr>
+
+      <div class="form-group">
+        <label class="form-label">Previous name: {{company.name}}</label>
+        <br>
+      </div>
+
+      <hr>
+      <br>
+
+      <div class="form-group">
+
+        <input
+          name="name"
+          [(ngModel)]="model.name"
+          class="form-control"
+          type="text"
+          placeholder="Name"
+          required
+        >
+
+        <br>
+
+        <div class="form-group text-center">
+          <button
+            class="btn btn-success"
+            type="submit"
+          >
+            Update
+          </button>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+</ng-container>

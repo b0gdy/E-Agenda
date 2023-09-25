@@ -1,0 +1,7 @@
+<div class="container" *ngIf="(userService.currentUser$ | async) === null">
+  <app-login></app-login>
+</div>
+
+<div class="container" *ngIf="(userService.currentUser$ | async) !== null">
+  <app-user></app-user>
+</div>

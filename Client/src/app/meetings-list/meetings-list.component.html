@@ -1,0 +1,60 @@
+<div class="container w-100">
+
+  <h1 class="text-center text-primary">Meetings</h1>
+  <br>
+
+  <table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+      <th class="w-auto" scope="col">#</th>
+      <th class="w-auto" scope="col">Date</th>
+      <th class="w-auto" scope="col">Start</th>
+      <th class="w-auto" scope="col" colspan="2">End</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of meetings | paginate: { itemsPerPage: size, currentPage: page, totalItems: total}; index as i" [routerLink]="['/meeting-details/', m.id]">
+<!--      <tr *ngFor="let m of meetings; index as i" [routerLink]="['/meeting-details/', m.id]">-->
+        <ng-container *ngIf="m.date.getTime() === date.getTime()">
+          <th class="table-info" scope="row">{{(i+1)*page}}</th>
+          <td class="table-info">{{m.date | date:'dd-MM-yyyy'}}</td>
+          <td class="table-info">{{m.start | date:'HH:mm'}}</td>
+          <td class="table-info">{{m.end | date:'HH:mm'}}</td>
+          <td class="table-info">Meeting today</td>
+        </ng-container>
+        <ng-container *ngIf="m.date.getTime() < date.getTime()">
+          <th class="table-secondary" scope="row">{{i+1+(page-1)*size}}</th>
+          <td class="table-secondary">{{m.date | date:'dd-MM-yyyy'}}</td>
+          <td class="table-secondary">{{m.start | date:'HH:mm'}}</td>
+          <td class="table-secondary">{{m.end | date:'HH:mm'}}</td>
+          <td class="table-secondary">Past meeting</td>
+        </ng-container>
+        <ng-container *ngIf="m.date.getTime() > date.getTime()">
+          <th class="table-light" scope="row">{{i+1+(page-1)*size}}</th>
+          <td class="table-light">{{m.date | date:'dd-MM-yyyy'}}</td>
+          <td class="table-light">{{m.start | date:'HH:mm'}}</td>
+          <td class="table-light">{{m.end | date:'HH:mm'}}</td>
+          <td class="table-light">Future meeting</td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <pagination-controls class="text-center" previousLabel="Prev" nextLabel="Next" [responsive]="true" [autoHide]="true" (pageChange)="page = $event"></pagination-controls>
+
+  <br>
+
+  <div class="text-center">
+    <a
+      routerLink='/meeting-create'
+      class="btn btn-primary btn-lg"
+      role="button"
+      aria-pressed="true"
+    >
+      Add meeting
+    </a>
+  </div>
+
+</div>

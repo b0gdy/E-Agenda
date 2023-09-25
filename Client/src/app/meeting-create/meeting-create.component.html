@@ -1,0 +1,198 @@
+<!--<form>-->
+<!--  <input type="text" placeholder="Filter by name" #filter>-->
+<!--  <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>-->
+<!--</form>-->
+<!--<br>-->
+
+<!--<p *ngFor="let employee of filteredEmployees">-->
+<!--  <ng-container *ngIf="filteredFirst">-->
+<!--    Employee username: {{employee.userName}}-->
+<!--    <br>-->
+<!--  </ng-container>-->
+<!--</p>-->
+
+
+<div class="container">
+  <form #createMeetingForm="ngForm" (ngSubmit)="create(createMeetingForm)" autocomplete="off">
+
+    <div class="form-group">
+      <h2 class="text-center text-primary">Add new meeting</h2>
+    </div>
+
+    <hr>
+
+    <div class="form-group row">
+
+      <div class="col-2"></div>
+
+      <div class="col">
+
+        <div class="form-group row">
+          <label class="form-control-label col-auto mt-auto mb-auto">Select start date:</label>
+          <form class="col row">
+            <input
+              type="datetime-local"
+              class="form-control col rounded-end-0"
+              name="startDate"
+              min="{{minStartDate|date: 'yyyy-MM-ddTHH:mm'}}"
+              [(ngModel)]="model.startDate"
+              placeholder="Meeting start date"
+              required
+            >
+            <button class="btn btn-outline-primary col-auto rounded-start-0" type="button" (click)="selectStartDate(model.startDate)">Select</button>
+          </form>
+        </div>
+
+        <ng-container *ngIf="startDateSelected">
+
+          <br>
+
+          <div class="form-group row">
+            <label class="form-control-label col-auto mt-auto mb-auto">Select end date:</label>
+            <form class="col row">
+              <input
+                type="datetime-local"
+                class="form-control col rounded-end-0"
+                name="endDate"
+                min="{{minEndDate|date: 'yyyy-MM-ddTHH:mm'}}"
+                [(ngModel)]="model.endDate"
+                placeholder="Meeting end date"
+                required
+              >
+              <button class="btn btn-outline-primary col-auto rounded-start-0" type="button" (click)="selectEndDate(model.endDate)">Select</button>
+            </form>
+          </div>
+
+        </ng-container>
+
+        <ng-container *ngIf="startDateSelected && endDateSelected">
+
+          <br>
+
+          <div class="form-group row">
+            <label class="form-control-label col-auto mt-auto mb-auto">Add Participants:</label>
+            <form class="col row">
+              <input
+                type="text"
+                class="form-control col rounded-end-0"
+                placeholder="Filter by name" #filter
+              >
+              <button class="btn btn-outline-primary col-auto rounded-start-0" type="button" (click)="filterResults(filter.value)">Search</button>
+            </form>
+          </div>
+
+          <br>
+
+          <ng-container *ngIf="filteredFirst">
+
+            <div class="row">
+
+              <ul class="list-group">
+                <ng-container *ngFor="let employee of filteredEmployees">
+                  <ng-container *ngIf="!addedEmployees.includes(employee)">
+                    <li class="list-group-item list-group-item-action" (click)="addEmployee(employee)">
+                      {{employee.firstName}} {{employee.lastName}}
+                    </li>
+                  </ng-container>
+                </ng-container>
+              </ul>
+
+            </div>
+
+            <br>
+
+          </ng-container>
+
+          <ng-container *ngIf="employeesAdded">
+
+            <div class="row">
+
+              <h4>Added Participants:</h4>
+
+              <ul class="list-group">
+                <ng-container *ngFor="let employee of addedEmployees">
+                  <li class="list-group-item list-group-item-action" (click)="removeEmployee(employee)">
+                    {{employee.firstName}} {{employee.lastName}}
+                  </li>
+                </ng-container>
+              </ul>
+
+            </div>
+
+            <br>
+
+<!--            <ng-container *ngIf="meetings.length !== 0">-->
+
+              <div class="row">
+
+                <ng-container *ngIf="meetings.length !== 0">
+
+                  <div class="col">
+
+                    <h6>Other scheduled meetings for selected participants</h6>
+
+                    <ul class="list-group">
+                      <ng-container *ngFor="let meeting of meetings">
+                        <li class="list-group-item list-group-item-action">
+                          On {{meeting.date|date: 'yyyy-MM-dd'}} from {{meeting.start|date: 'HH:mm'}} to {{meeting.end|date: 'HH:mm'}}<br>
+                          Participants:<br>
+                          <ng-container *ngFor="let participant of meeting.participants">{{participant.employee.firstName}} {{participant.employee.lastName}}<br></ng-container>
+                        </li>
+                      </ng-container>
+                    </ul>
+
+                  </div>
+
+                </ng-container>
+
+                <ng-container *ngIf="busyTimes.length !== 0">
+
+                  <div class="col">
+
+                    <h6>Other scheduled events for selected participants</h6>
+
+                    <ul class="list-group">
+                      <ng-container *ngFor="let busyTime of busyTimes">
+                        <li class="list-group-item list-group-item-action">
+                          On {{busyTime.date|date: 'yyyy-MM-dd'}} from {{busyTime.start|date: 'HH:mm'}} to {{busyTime.end|date: 'HH:mm'}}<br>
+                          Employee:{{busyTime.employee.firstName}} {{busyTime.employee.lastName}}<br>
+                        </li>
+                      </ng-container>
+                    </ul>
+
+                  </div>
+
+                </ng-container>
+
+              </div>
+
+              <br>
+
+<!--            </ng-container>-->
+
+
+          </ng-container>
+
+          <div class="form-group text-center">
+            <button
+              class="btn btn-success btn-lg"
+              type="submit"
+              [disabled]="!createMeetingForm.valid"
+            >
+              Create
+            </button>
+          </div>
+
+          <br>
+
+        </ng-container>
+
+      </div>
+
+      <div class="col-2"></div>
+
+    </div>
+
+
+  </form>
+</div>

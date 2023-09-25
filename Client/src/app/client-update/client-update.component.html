@@ -1,0 +1,85 @@
+<ng-container *ngIf="clientFetched && companiesFetched">
+  <div class="container w-25">
+    <form #udpateClientForm="ngForm" (ngSubmit)="update(clientId, udpateClientForm)" autocomplete="off">
+
+      <div class="form-group">
+        <h2 class="text-center text-primary">Update client</h2>
+      </div>
+
+      <hr>
+
+      <div class="form-group">
+        <label class="form-label">Previous name: {{client.firstName}} {{client.lastName}}</label>
+        <label class="form-label">Previous company: {{client.company.name}}</label>
+        <br>
+      </div>
+
+      <hr>
+      <br>
+
+      <div class="form-group">
+
+        <input
+          name="firstName"
+          [(ngModel)]="model.firstName"
+          class="form-control"
+          type="text"
+          placeholder="Firstname"
+          required
+        >
+
+        <br>
+
+        <input
+          name="lastName"
+          [(ngModel)]="model.lastName"
+          class="form-control"
+          type="text"
+          placeholder="Lastname"
+          required
+        >
+
+        <br>
+
+        <div class="form-group text-center">
+          <label class="form-label d-inline" style="margin-right:10px" for="company">Company: </label>
+          <select
+            class="form-select d-inline"
+            style="width: auto"
+            name="company"
+            [(ngModel)]="model.companyId"
+            id="company"
+            required
+          >
+            <option *ngFor="let c of companies" [value]="c.id">{{c.name}}</option>
+          </select>
+        </div>
+
+        <br>
+
+        <input
+          name="password"
+          [(ngModel)]="model.password"
+          class="form-control"
+          type="password"
+          placeholder="Password"
+          required
+        >
+
+        <br>
+
+        <div class="form-group text-center">
+          <button
+            class="btn btn-success"
+            type="submit"
+          >
+            Update
+          </button>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+</ng-container>

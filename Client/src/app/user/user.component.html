@@ -1,0 +1,28 @@
+<div class="container">
+  <h1 class="text-center mt-5 pt-5 mb-5 pb-5">
+    Welcome to E-Agenda!
+  </h1>
+  <hr>
+  <div class="row mt-5 pt-5">
+    <div class="col"></div>
+    <div class="col-auto text-center">
+      <ng-container *ngIf="(loaded === true) && ((localStorage.getItem('role') === 'admin') || (localStorage.getItem('role') === 'employee'))">
+        <h3>Glad you are here: {{employee.firstName}} {{employee.lastName}}</h3>
+        <br>
+        <h4>You are an: {{user.role}}</h4>
+        <br>
+        <h5>Please use this application with confidence!</h5>
+      </ng-container>
+      <ng-container *ngIf="(loaded === true) && (localStorage.getItem('role') === 'client')">
+        <h3>Glad you are here: {{client.firstName}} {{client.lastName}}</h3>
+        <br>
+        <h4>You are an: {{user.role}}</h4>
+        <br>
+        <h4>From: {{client.company.name}}</h4>
+        <br>
+        <h5>Please use this application with confidence!</h5>
+      </ng-container>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>

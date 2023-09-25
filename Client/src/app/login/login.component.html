@@ -1,0 +1,49 @@
+<div class="container w-25">
+    
+    <form #userLoginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+
+        <div class="form-group">
+            <h2 class="text-center text-primary">Login</h2>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+
+            <input
+                name="userName"
+                [(ngModel)]="model.userName"
+                class="form-control"
+                type="search"
+                placeholder="Username"
+                required
+            >
+
+            <br>
+
+            <input
+                name="password"
+                [(ngModel)]="model.password"
+                class="form-control"
+                type="password"
+                placeholder="Password"
+                required
+            >
+
+        </div>
+
+        <br>
+
+        <div class="form-group text-center">
+            <button 
+                class="btn btn-success mr-2" 
+                type="submit"
+                [disabled]="!userLoginForm.valid"
+            >
+            Login
+            </button>
+        </div>
+
+    </form>
+
+</div>

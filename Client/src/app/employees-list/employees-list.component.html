@@ -1,0 +1,65 @@
+<div class="container w-75">
+
+  <h1 class="text-center text-primary">Employees</h1>
+  <br>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="form-group row col-auto">
+      <label class="form-label col-auto mt-auto mb-auto">Show disabled:</label>
+      <form class="form-check form-switch col-auto mt-auto mb-auto">
+        <input class="form-check-input" type="checkbox" id="showDisabled" (click)="showDisabled()">
+        <label class="form-check-label" for="showDisabled">
+          Yes
+        </label>
+      </form>
+    </div>
+    <div class="col"></div>
+  </div>
+  <br>
+
+  <table class="table table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th class="w-auto" scope="col">#</th>
+        <th class="w-auto" scope="col">Firstname</th>
+        <th class="w-auto" scope="col">Lastname</th>
+        <th class="w-auto" scope="col">Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of employees | paginate: { itemsPerPage: size, currentPage: page, totalItems: total}; index as i" [routerLink]="['/employee-details/', e.id]">
+        <ng-container *ngIf="e.enabled">
+          <th scope="row">{{i+1}}</th>
+          <td>{{e.firstName}}</td>
+          <td>{{e.lastName}}</td>
+          <td>{{e.role}}</td>
+        </ng-container>
+        <ng-container *ngIf="!e.enabled">
+          <th class="table-secondary text-muted" scope="row">{{i+1}}</th>
+          <td class="table-secondary text-muted">{{e.firstName}}</td>
+          <td class="table-secondary text-muted">{{e.lastName}}</td>
+          <td class="table-secondary text-muted">{{e.role}}</td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <pagination-controls class="text-center" previousLabel="Prev" nextLabel="Next" [responsive]="true" [autoHide]="true" (pageChange)="page = $event"></pagination-controls>
+
+  <br>
+
+  <div class="text-center">
+    <a
+      routerLink='/employee-create'
+      class="btn btn-primary btn-lg"
+      role="button"
+      aria-pressed="true"
+    >
+      Add employee
+    </a>
+  </div>
+
+</div>
